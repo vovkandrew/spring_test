@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } finally {
             if (session != null) {
                 session.close();
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
                     "from User ", User.class);
             return query.list();
         } catch (RuntimeException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }
