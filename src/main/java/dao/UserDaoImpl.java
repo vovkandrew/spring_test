@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 import model.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -24,11 +25,11 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-        } catch (RuntimeException e) {
+        } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException(e);
+            throw new HibernateException(e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,8 +43,8 @@ public class UserDaoImpl implements UserDao {
             Query<User> query = session.createQuery(
                     "from User ", User.class);
             return query.list();
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+        } catch (HibernateException e) {
+            throw new HibernateException(e);
         }
     }
 }
