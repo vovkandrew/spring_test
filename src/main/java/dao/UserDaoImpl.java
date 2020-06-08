@@ -47,4 +47,16 @@ public class UserDaoImpl implements UserDao {
             throw new HibernateException(e);
         }
     }
+
+    @Override
+    public User getUserById(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(
+                    "from User where userId = :userId", User.class);
+            query.setParameter("userId", userId);
+            return query.uniqueResult();
+        } catch (HibernateException e) {
+            throw new HibernateException(e);
+        }
+    }
 }
