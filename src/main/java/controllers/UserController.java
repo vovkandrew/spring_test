@@ -37,8 +37,8 @@ public class UserController {
         return getUserResponseDto(userService.getUserById(userId));
     }
 
-    @GetMapping("/")
-    public List<UserResponseDto> getAl() {
+    @GetMapping
+    public List<UserResponseDto> getAll() {
         return userService.listUsers().stream()
                 .map(this::getUserResponseDto)
                 .collect(Collectors.toList());
